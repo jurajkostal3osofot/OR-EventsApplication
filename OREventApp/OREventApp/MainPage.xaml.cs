@@ -15,16 +15,15 @@ namespace OREventApp
 			InitializeComponent();
 		}
 
-	    private void Cell_OnTapped(object sender, EventArgs e)
+	    private void IndexClicked(object sender, EventArgs e)
 	    {
-	        var page = new EventPickerPage();
-	        page.GetPickerEvents.ItemSelected += (src, args) =>
-	        {
-	            PickerEvents.Text = args.SelectedItem.ToString();
+	        var page = new NavigationPage(new IndexPage());
+	        Navigation.PushAsync(page);
+	    }
 
-                Navigation.PopAsync();
-	        };
-
+	    private void AddEventClicked(object sender, EventArgs e)
+	    {
+	        var page = new NavigationPage(new AddEventPage());
 	        Navigation.PushAsync(page);
         }
 	}

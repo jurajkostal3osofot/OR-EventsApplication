@@ -4,41 +4,13 @@
              xmlns:local="clr-namespace:OREventApp"
              xmlns:sys="clr-namespace:System;assembly=netstandard"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
+             xmlns:renderers="clr-namespace:OREventApp.Renderers;assembly=OREventApp"
              x:Class="OREventApp.MainPage">
 
     <ContentPage.Content>
         <StackLayout x:Name="MainLayout">
-            <StackLayout VerticalOptions="StartAndExpand" Padding="30">
-                <maps:Map WidthRequest="320" HeightRequest="200"
-                          x:Name="MyMap"
-                          IsShowingUser="true"
-                          MapType="Hybrid"
-                />
-            </StackLayout>
-            <TableView Intent="Form">
-                <TableRoot>
-                    <TableSection Title="Basics">
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="13,0">
-                                <Label Text="Dátum"></Label>
-                                <DatePicker HorizontalOptions="EndAndExpand" Date="{x:Static sys:DateTime.Today}" MinimumDate="{x:Static x:DateTime.Today}"  Format="d.MM.yyyy" ></DatePicker>
-                            </StackLayout>
-                        </ViewCell>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="13,0">
-                                <Label VerticalOptions="Center" Text="Čas"></Label>
-                                <TimePicker HorizontalOptions="EndAndExpand" ></TimePicker>
-                            </StackLayout>
-                        </ViewCell>
-                        <ViewCell Tapped="Cell_OnTapped">
-                            <StackLayout Orientation="Horizontal" Padding="13,0">
-                                <Label VerticalOptions="Center" Text="Aktivita"></Label>
-                                <Label x:Name="PickerEvents" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="Žiadna"></Label>
-                            </StackLayout>
-                        </ViewCell>
-                    </TableSection>
-                </TableRoot>
-            </TableView>
+            <Button Clicked="IndexClicked" Text="Index"></Button>
+            <Button Clicked="AddEventClicked" Text="AddEvent"></Button>
         </StackLayout>
     </ContentPage.Content>
 
