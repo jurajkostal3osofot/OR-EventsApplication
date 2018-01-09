@@ -1,9 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using OREventApp.Droid;
 using OREventApp.Renderers;
+using Shared.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Maps.Android;
@@ -49,6 +51,11 @@ namespace OREventApp.Droid
             marker.SetSnippet(pin.Address);
             marker.SetIcon(BitmapDescriptorFactory.FromResource(Resource.Drawable.ic_launcher));
             return marker;
+        }
+
+        private void AddMarkers(IEnumerable<EventShared> events)
+        {
+            
         }
     }
 
