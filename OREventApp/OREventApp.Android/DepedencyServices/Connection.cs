@@ -1,5 +1,8 @@
-﻿using OREventApp.Droid.DepedencyServices;
+﻿using Android.Content;
+using Android.Net;
+using OREventApp.Droid.DepedencyServices;
 using OREventApp.Interfaces;
+using Xamarin.Forms;
 
 [assembly: Xamarin.Forms.Dependency(typeof(Connection))]
 namespace OREventApp.Droid.DepedencyServices
@@ -8,7 +11,10 @@ namespace OREventApp.Droid.DepedencyServices
     {
         public bool CheckConnection()
         {
-            return true;
+            var connectivityManager = (ConnectivityManager)Forms.Context.ApplicationContext.GetSystemService(Context.ConnectivityService);
+            NetworkInfo networkInfo = connectivityManager.ActiveNetworkInfo;
+            bool isConnected = networkInfo != null && networkInfo.IsConnectedOrConnecting;
+            return isConnected;
         }
     }
 }

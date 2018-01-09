@@ -11,12 +11,12 @@ using Xamarin.Forms.Maps;
 using Xamarin.Forms.Maps.Android;
 using View = Android.Views.View;
 
-[assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
+[assembly: ExportRenderer(typeof(IndexMap), typeof(IndexMapRenderer))]
 namespace OREventApp.Droid
 {
     public class IndexMapRenderer : MapRenderer
     {
-        private CustomMap formsMap;
+        private IndexMap _formsMap;
 
         public IndexMapRenderer(Context context) : base(context)
         {
@@ -33,7 +33,7 @@ namespace OREventApp.Droid
 
             if (e.NewElement != null)
             {
-                formsMap = (CustomMap)e.NewElement;
+                _formsMap = (IndexMap)e.NewElement;
                 Control.GetMapAsync(this);
             }
         }

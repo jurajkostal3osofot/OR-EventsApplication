@@ -16,8 +16,6 @@ namespace OREventApp.Pages
 		public IndexPage ()
 		{
 			InitializeComponent ();
-		    var connection = Connection.CheckInternetConnection();
-
             InnitMap();
             LoadPins();
 		}

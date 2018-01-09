@@ -5,7 +5,7 @@ using Xamarin.Forms.Maps;
 
 namespace OREventApp.Renderers
 {
-    class IndexMap : Map
+    public class IndexMap : Map
     {
         public IndexMap()
         {
