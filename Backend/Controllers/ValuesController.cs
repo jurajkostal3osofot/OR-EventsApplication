@@ -3,12 +3,41 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Web.Http;
 
 namespace Backend.Controllers
 {
     public class ValuesController : ApiController
     {
+        [AllowAnonymous]
+        [HttpGet]
+        [Route("api/values/allowed")]
+        public IHttpActionResult Allowed()
+        {
+            return Ok("login okay");
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("api/values/logged")]
+        public IHttpActionResult Logged()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            return Ok("hello" + identity.Name);
+        }
+
+        [Authorize(Roles = "admin")]
+        [HttpGet]
+        [Route("api/values/admin")]
+        public IHttpActionResult Admin()
+        {
+            var identity = (ClaimsIdentity)User.Identity;
+            return Ok("hello" + identity.Name);
+        }
+
+
+
         // GET api/values
         public IEnumerable<string> Get()
         {

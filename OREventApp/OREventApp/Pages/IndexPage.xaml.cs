@@ -15,8 +15,8 @@ namespace OREventApp.Pages
 	public partial class IndexPage : ContentPage
 	{
 	    private IndexMap _map;
-	    private List<double> _latitudes;
-	    private List<double> _longitudes; 
+	    private readonly List<double> _latitudes;
+	    private readonly List<double> _longitudes; 
         public IndexPage ()
 		{
 			InitializeComponent ();
