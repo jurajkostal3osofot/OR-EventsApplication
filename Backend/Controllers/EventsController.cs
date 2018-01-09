@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity.Spatial;
 using System.Linq;
 using System.Web;
 using System.Web.Http;
+using Backend.Enums;
 using Backend.Interfaces.Repositories;
 using Backend.Models;
+using Newtonsoft.Json;
 using Shared.Enums;
 using Shared.Models;
 
@@ -46,10 +49,22 @@ namespace Backend.Controllers
         }
 
         // POST api/values
-        public IHttpActionResult Post([FromBody]Event result)
+        public IHttpActionResult Post([FromBody]EventShared result)
         {
-            //var ret = JsonConvert.DeserializeObject <Event> (result);
+            _eventRepository.Add(new Event
+            {
+                EventType = (EventType)result.EventType,
+                Location = CreatePoint(result.Latitude.GetValueOrDefault(),result.Longitude.GetValueOrDefault()),
+                Date = result.Date
+            });
             return Ok();
+        }
+
+        public static DbGeography CreatePoint(double lat, double lon, int srid = 4326)
+        {
+            string wkt = String.Format("POINT({1} {0})", lat, lon);
+            wkt = wkt.Replace(",", ".");
+            return DbGeography.PointFromText(wkt, srid);
         }
     }
 }

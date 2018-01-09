@@ -17,7 +17,8 @@ namespace Backend.Repositories
         public void Add(Event newEvent)
         {
 
-            throw new NotImplementedException();
+            _databaseContext.Events.Add(newEvent);
+            _databaseContext.SaveChanges();
         }
 
         public void Edit(Event editEvent)
@@ -37,8 +38,9 @@ namespace Backend.Repositories
 
         public IEnumerable<Event> GetNearByTenEvents()
         {
-            DbGeography point = CreatePoint(49.0511, 20.2954);
-            return _databaseContext.Events.OrderBy(x => x.Location.Distance(point)).Take(20);
+            DbGeography point = CreatePoint(48.1486, 17.1077);
+            //return _databaseContext.Events.OrderBy(x => x.Location.Distance(point)).Take(20);20000000
+            return _databaseContext.Events.Where(x => x.Location.Distance(point) < 200000).Take(20);
         }
 
         public static DbGeography CreatePoint(double lat, double lon, int srid = 4326)

@@ -9,7 +9,7 @@ namespace OREventApp.Droid.DepedencyServices
 {
     class Connection : IConnection
     {
-        public bool CheckConnection()
+        public  bool CheckConnection()
         {
             var connectivityManager = (ConnectivityManager)Forms.Context.ApplicationContext.GetSystemService(Context.ConnectivityService);
             NetworkInfo networkInfo = connectivityManager.ActiveNetworkInfo;

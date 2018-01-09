@@ -12,5 +12,19 @@ namespace OREventApp.Utilities
         {
             return DependencyService.Get<IConnection>().CheckConnection();
         }
+
+        public static void ShowNotificationNoInternetConnection()
+        {
+
+            DependencyService.Get<INotification>().Notify("No internet connection", 5000, "CLOSE", obj => { });
+
+        }
+
+        public static void ShowNotificationNoMarkerSelected()
+        {
+
+            DependencyService.Get<INotification>().Notify("No marker selected", 5000, "CLOSE", obj => { });
+
+        }
     }
 }

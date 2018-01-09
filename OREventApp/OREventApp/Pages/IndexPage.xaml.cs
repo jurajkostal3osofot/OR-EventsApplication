@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
+using OREventApp.Domain;
 using OREventApp.Helpers;
 using OREventApp.Renderers;
 using OREventApp.Utilities;
@@ -13,12 +15,25 @@ namespace OREventApp.Pages
 	public partial class IndexPage : ContentPage
 	{
 	    private IndexMap _map;
-		public IndexPage ()
+	    private List<double> _latitudes;
+	    private List<double> _longitudes; 
+        public IndexPage ()
 		{
 			InitializeComponent ();
             InnitMap();
-            LoadPins();
-		}
+		    if (Connection.CheckInternetConnection())
+		    {
+		        LoadPins();
+		    }
+		    else
+		    {
+		        Connection.ShowNotificationNoInternetConnection();
+		    }
+
+            _latitudes = new List<double>();
+		    _longitudes = new List<double>();
+
+        }
 
 	    public void InnitMap()
 	    {
@@ -50,7 +65,29 @@ namespace OREventApp.Pages
 	                Label = ""
 	            };
                 _map.Pins.Add(pin);
+                _latitudes.Add(pin.Position.Latitude);
+                _longitudes.Add(pin.Position.Longitude);
             }
+            CenterMarkersOnMap();
+            Notifications.ShowNumberEvents(_map.Pins.Count);
 	    }
+
+
+	    private void CenterMarkersOnMap()
+	    {	        
+	        _latitudes.Add(48.1486);
+	        _longitudes.Add(17.1077);
+
+	        double lowestLat = _latitudes.Min();
+	        double highestLat = _latitudes.Max();
+	        double lowestLong = _longitudes.Min();
+	        double highestLong = _longitudes.Max();
+	        double finalLat = (lowestLat + highestLat) / 2;
+	        double finalLong = (lowestLong + highestLong) / 2;
+	        double distance = DistanceCalculation.GeoCodeCalc.CalcDistance(lowestLat, lowestLong, highestLat, highestLong, DistanceCalculation.GeoCodeCalcMeasurement.Kilometers);
+
+	        _map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(finalLat, finalLong), Distance.FromKilometers(distance)));
+            
+        }
 	}
 }

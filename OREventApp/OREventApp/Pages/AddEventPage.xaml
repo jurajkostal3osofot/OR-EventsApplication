@@ -20,13 +20,13 @@
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="13,0">
                                 <Label Text="Dátum"></Label>
-                                <DatePicker HorizontalOptions="EndAndExpand"  Format="d.MM.yyyy" ></DatePicker>
+                                <DatePicker x:Name="DatePicker" HorizontalOptions="EndAndExpand"  Format="d.MM.yyyy" ></DatePicker>
                             </StackLayout>
                         </ViewCell>
                         <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="13,0">
                                 <Label VerticalOptions="Center" Text="Čas"></Label>
-                                <TimePicker HorizontalOptions="EndAndExpand" ></TimePicker>
+                                <TimePicker x:Name="Picker" HorizontalOptions="EndAndExpand" ></TimePicker>
                             </StackLayout>
                         </ViewCell>
                         <ViewCell >
@@ -38,6 +38,8 @@
                     </TableSection>
                 </TableRoot>
             </TableView>
+
+            <Button Clicked="AddNewEvent" Text="Submit"></Button>
 
         </StackLayout>
     </ContentPage.Content>
