@@ -20,7 +20,7 @@ namespace OREventApp.Helpers
             _client.MaxResponseContentBufferSize = 256000;
         }
 
-        public async Task<bool> SaveTodoItemAsync(EventShared newEvent, bool isNewItem = false)
+        public async Task<bool> SaveEventAsync(EventShared newEvent)
         {
             var uri = new Uri(string.Format(Constants.EventsUrl, string.Empty));
 
@@ -28,10 +28,9 @@ namespace OREventApp.Helpers
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
             HttpResponseMessage response = null;
-            if (isNewItem)
-            {
-                response = await _client.PostAsync(uri, content);
-            }
+            
+            response = await _client.PostAsync(uri, content);
+            
 
             return response.IsSuccessStatusCode;
         }

@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using OREventApp.Helpers;
 using OREventApp.Renderers;
+using OREventApp.Utilities;
 using Shared.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
@@ -20,6 +16,8 @@ namespace OREventApp.Pages
 		public IndexPage ()
 		{
 			InitializeComponent ();
+		    var connection = Connection.CheckInternetConnection();
+
             InnitMap();
             LoadPins();
 		}

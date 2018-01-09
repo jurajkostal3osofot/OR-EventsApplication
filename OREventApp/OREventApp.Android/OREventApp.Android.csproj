@@ -64,6 +64,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CustomMapRenderer.cs" />
+    <Compile Include="DepedencyServices\Connection.cs" />
     <Compile Include="IndexMapRenderer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Resources\Resource.Designer.cs" />
