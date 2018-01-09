@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Android.Content;
+﻿using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
 using OREventApp.Droid;
@@ -60,7 +59,7 @@ namespace OREventApp.Droid
             var pin = new Pin()
             {
                 Position = new Position(point.Latitude, point.Longitude),
-                Label = "New event"
+                Label = ""
             };
             formsMap.Pins.Clear();
             formsMap.Pins.Add(pin);   

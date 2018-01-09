@@ -7,11 +7,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OREventApp.Android", "OREve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OREventApp", "OREventApp\OREventApp\OREventApp.csproj", "{5D525D53-28F4-4860-9E76-BD2B306B2337}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Backend", "Backend\Backend.csproj", "{D1449F3E-D4FC-40BC-B601-28EBCEAFA0E1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Backend", "Backend\Backend.csproj", "{9B582C6A-BA91-4486-A64A-B882CCDF74E8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Portable", "Portable\Portable.csproj", "{A062C5A2-99A7-4945-B377-C9E4B35ADAEA}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EntityFramework", "EntityFramework\EntityFramework.csproj", "{6EEE9A8B-6D87-40E4-A9A6-2CADBE4F1A06}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Shared", "Shared\Shared.csproj", "{7D7795ED-82C3-4EA3-B3DE-A0874157AA05}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,18 +27,14 @@ Global
 		{5D525D53-28F4-4860-9E76-BD2B306B2337}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D525D53-28F4-4860-9E76-BD2B306B2337}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D525D53-28F4-4860-9E76-BD2B306B2337}.Release|Any CPU.Build.0 = Release|Any CPU
-		{D1449F3E-D4FC-40BC-B601-28EBCEAFA0E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D1449F3E-D4FC-40BC-B601-28EBCEAFA0E1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D1449F3E-D4FC-40BC-B601-28EBCEAFA0E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D1449F3E-D4FC-40BC-B601-28EBCEAFA0E1}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A062C5A2-99A7-4945-B377-C9E4B35ADAEA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A062C5A2-99A7-4945-B377-C9E4B35ADAEA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A062C5A2-99A7-4945-B377-C9E4B35ADAEA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A062C5A2-99A7-4945-B377-C9E4B35ADAEA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6EEE9A8B-6D87-40E4-A9A6-2CADBE4F1A06}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6EEE9A8B-6D87-40E4-A9A6-2CADBE4F1A06}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6EEE9A8B-6D87-40E4-A9A6-2CADBE4F1A06}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6EEE9A8B-6D87-40E4-A9A6-2CADBE4F1A06}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B582C6A-BA91-4486-A64A-B882CCDF74E8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B582C6A-BA91-4486-A64A-B882CCDF74E8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B582C6A-BA91-4486-A64A-B882CCDF74E8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B582C6A-BA91-4486-A64A-B882CCDF74E8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7D7795ED-82C3-4EA3-B3DE-A0874157AA05}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D7795ED-82C3-4EA3-B3DE-A0874157AA05}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D7795ED-82C3-4EA3-B3DE-A0874157AA05}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D7795ED-82C3-4EA3-B3DE-A0874157AA05}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -5,7 +5,7 @@
              xmlns:renderers="clr-namespace:OREventApp.Renderers;assembly=OREventApp"
              x:Class="OREventApp.Pages.AddEventPage">
     <ContentPage.Content>
-        <StackLayout x:Name="MainLayout">
+        <StackLayout>
             <StackLayout VerticalOptions="StartAndExpand" Padding="30">
                 <renderers:CustomMap WidthRequest="320" HeightRequest="200"
                           x:Name="MyMap"

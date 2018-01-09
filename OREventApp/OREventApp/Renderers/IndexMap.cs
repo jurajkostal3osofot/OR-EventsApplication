@@ -7,5 +7,14 @@ namespace OREventApp.Renderers
 {
     class IndexMap : Map
     {
+        public IndexMap()
+        {
+            
+        }
+
+        public IndexMap(MapSpan mapSpan) : base(mapSpan)
+        {
+            
+        }
     }
 }

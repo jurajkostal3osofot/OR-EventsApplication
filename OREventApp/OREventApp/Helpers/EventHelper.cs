@@ -4,10 +4,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Shared.Models;
 
 namespace OREventApp.Helpers
 {
-    /*
+    
     class EventHelper
     {
 
@@ -19,7 +20,7 @@ namespace OREventApp.Helpers
             _client.MaxResponseContentBufferSize = 256000;
         }
 
-        public async Task<bool> SaveTodoItemAsync(Event newEvent, bool isNewItem = false)
+        public async Task<bool> SaveTodoItemAsync(EventShared newEvent, bool isNewItem = false)
         {
             var uri = new Uri(string.Format(Constants.EventsUrl, string.Empty));
 
@@ -35,15 +36,15 @@ namespace OREventApp.Helpers
             return response.IsSuccessStatusCode;
         }
 
-        public async Task<IEnumerable<Event>> GetEventsAsync()
+        public async Task<IEnumerable<EventShared>> GetEventsAsync()
         {
             var uri = new Uri(string.Format(Constants.EventsUrl, string.Empty));
 
             var content = await _client.GetStringAsync(uri);
 
-            IEnumerable<Event> events = JsonConvert.DeserializeObject<List<Event>>(content);
+            IEnumerable<EventShared> events = JsonConvert.DeserializeObject<List<EventShared>>(content);
             return events;
         }
 
-    }*/
+    }
 }

@@ -90,6 +90,10 @@
     </AndroidResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Shared\Shared.csproj">
+      <Project>{7d7795ed-82c3-4ea3-b3de-a0874157aa05}</Project>
+      <Name>Shared</Name>
+    </ProjectReference>
     <ProjectReference Include="..\OREventApp\OREventApp.csproj">
       <Project>{D246FF58-3849-427A-AC1E-A5ECFC050081}</Project>
       <Name>OREventApp</Name>
