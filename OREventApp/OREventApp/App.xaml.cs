@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-
+using OREventApp.Pages;
 using Xamarin.Forms;
 
 namespace OREventApp
@@ -13,8 +13,14 @@ namespace OREventApp
 		{
 			InitializeComponent();
 
-			MainPage = new NavigationPage(new OREventApp.MainPage());
-		}
+			//MainPage = new NavigationPage(new OREventApp.MainPage());
+		    var tabs = new TabbedPage();
+		    tabs.Children.Add(new IndexPage());
+		    tabs.Children.Add(new AddEventPage());
+		    tabs.Children.Add(new EventsNearPage());
+
+		    MainPage = tabs;
+        }
 
 		protected override void OnStart ()
 		{

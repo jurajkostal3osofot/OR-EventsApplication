@@ -37,9 +37,19 @@ namespace OREventApp.Helpers
 
         public async Task<IEnumerable<EventShared>> GetEventsAsync()
         {
-            var uri = new Uri(string.Format(Constants.EventsUrl, string.Empty));
-
-            var content = await _client.GetStringAsync(uri);
+            //var uri = new Uri(string.Format(Constants.EventsUrl, string.Empty));
+            var uri = new Uri(Constants.EventsUrl);
+            var content = "";
+            try
+            {
+                content = await _client.GetStringAsync(uri);
+            }
+            catch (HttpRequestException e)
+            {
+                
+                Console.WriteLine("MAS ZLU IP!!!!!!!!!!!!!!!!!!!!!!" + e);
+            }
+            
 
             IEnumerable<EventShared> events = JsonConvert.DeserializeObject<List<EventShared>>(content);
             return events;

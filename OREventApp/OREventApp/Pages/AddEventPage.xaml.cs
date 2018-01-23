@@ -19,7 +19,9 @@ namespace OREventApp.Pages
 		public AddEventPage ()
 		{
 			InitializeComponent ();
-		}
+		    var activityListy = Enum.GetNames(typeof(EventTypeShared)).ToList();
+		    PlacePicker.ItemsSource = activityListy;
+        }
 
 	    private async void AddNewEvent(object sender, EventArgs e)
 	    {

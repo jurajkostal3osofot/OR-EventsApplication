@@ -29,10 +29,10 @@
                                 <TimePicker x:Name="Picker" HorizontalOptions="EndAndExpand" ></TimePicker>
                             </StackLayout>
                         </ViewCell>
-                        <ViewCell >
+                        <ViewCell>
                             <StackLayout Orientation="Horizontal" Padding="13,0">
                                 <Label VerticalOptions="Center" Text="Aktivita"></Label>
-                                <Label x:Name="PickerEvents" HorizontalOptions="EndAndExpand" VerticalOptions="Center" Text="Žiadna"></Label>
+                                <Picker x:Name="PlacePicker" Title="Select an activity" HorizontalOptions="EndAndExpand"></Picker>
                             </StackLayout>
                         </ViewCell>
                     </TableSection>
