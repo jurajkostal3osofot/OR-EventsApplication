@@ -40,18 +40,17 @@ namespace OREventApp.Helpers
             //var uri = new Uri(string.Format(Constants.EventsUrl, string.Empty));
             var uri = new Uri(Constants.EventsUrl);
             var content = "";
+            IEnumerable<EventShared> events;
             try
             {
                 content = await _client.GetStringAsync(uri);
+                events = JsonConvert.DeserializeObject<List<EventShared>>(content);
             }
             catch (HttpRequestException e)
             {
-                
-                Console.WriteLine("MAS ZLU IP!!!!!!!!!!!!!!!!!!!!!!" + e);
+                Console.WriteLine("" + e);
+                events = null;
             }
-            
-
-            IEnumerable<EventShared> events = JsonConvert.DeserializeObject<List<EventShared>>(content);
             return events;
         }
 

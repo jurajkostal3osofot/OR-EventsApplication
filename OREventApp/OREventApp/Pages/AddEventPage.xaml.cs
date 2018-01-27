@@ -36,9 +36,21 @@ namespace OREventApp.Pages
 	                    Date = DatePicker.Date,
                         Latitude = pin.Position.Latitude,
                         Longitude = pin.Position.Longitude,
-                        EventType = EventTypeShared.Tennis
+                        EventType = (EventTypeShared)PlacePicker.SelectedIndex
 	                };
-	                await helper.SaveEventAsync(newEvent);
+                    var result = await helper.SaveEventAsync(newEvent);
+                    if (result)
+                    {
+                        await DisplayAlert("Success!", "Your event has been created.", "Got ya!");
+                        new IndexPage();
+                    }
+                    else
+                    {
+                        await DisplayAlert("Fail!", "Your event has NOT been created. Blame the IT department", "Fine then");
+                    }
+	                
+                    
+                    
                 }   
 	            else
 	            {

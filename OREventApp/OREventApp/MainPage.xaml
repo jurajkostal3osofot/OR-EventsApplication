@@ -9,8 +9,6 @@
 
     <ContentPage.Content>
         <StackLayout x:Name="MainLayout">
-            <Button Clicked="IndexClicked" Text="Index"></Button>
-            <Button Clicked="AddEventClicked" Text="AddEvent"></Button>
         </StackLayout>
     </ContentPage.Content>
 

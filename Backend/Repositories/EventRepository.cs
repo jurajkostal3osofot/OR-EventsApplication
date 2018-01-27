@@ -41,6 +41,7 @@ namespace Backend.Repositories
             DbGeography point = CreatePoint(48.1486, 17.1077);
             //return _databaseContext.Events.OrderBy(x => x.Location.Distance(point)).Take(20);20000000
             return _databaseContext.Events.Where(x => x.Location.Distance(point) < 2000000).Take(20);
+//            return _databaseContext.Events.Where(x => true);
         }
 
         public static DbGeography CreatePoint(double lat, double lon, int srid = 4326)

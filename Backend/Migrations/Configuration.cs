@@ -26,7 +26,7 @@ namespace Backend.Migrations
             Random rng = new Random();
 
 
-            for (int i = 0; i < 3000; i++)
+            for (int i = 0; i < 300; i++)
             {
                 int lat = rng.Next(-900000000, 900000000);
                 int lon = rng.Next(-1800000000, 1800000000);

@@ -14,18 +14,10 @@ namespace OREventApp
 		public MainPage()
 		{
 		    InitializeComponent();
-		}
+            
+            
+            this.Title = "sportev";
 
-	    private void IndexClicked(object sender, EventArgs e)
-	    {
-	        var page = new NavigationPage(new IndexPage());
-	        Navigation.PushAsync(page);
-	    }
-
-	    private void AddEventClicked(object sender, EventArgs e)
-	    {
-	        var page = new NavigationPage(new AddEventPage());
-	        Navigation.PushAsync(page);
         }
 	}
 }

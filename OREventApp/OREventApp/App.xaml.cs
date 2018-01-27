@@ -13,13 +13,22 @@ namespace OREventApp
 		{
 			InitializeComponent();
 
-			//MainPage = new NavigationPage(new OREventApp.MainPage());
-		    var tabs = new TabbedPage();
-		    tabs.Children.Add(new IndexPage());
-		    tabs.Children.Add(new AddEventPage());
-		    tabs.Children.Add(new EventsNearPage());
+            //MainPage = new NavigationPage(new MainPage());
 
-		    MainPage = tabs;
+            var tabs = new TabbedPage()
+            {
+                Title = "sportsev"
+            };
+            tabs.Children.Add(new IndexPage());
+            tabs.Children.Add(new AddEventPage());
+            tabs.Children.Add(new EventsNearPage());
+
+            var navPage = new NavigationPage(tabs);
+            
+            navPage.Title = "sportsev";
+
+            MainPage = navPage;
+
         }
 
 		protected override void OnStart ()

@@ -51,6 +51,7 @@ namespace OREventApp.Pages
 	        Content = stack;
         }
 
+
 	    private async void LoadPins()
 	    {
 	        EventHelper helper = new EventHelper();

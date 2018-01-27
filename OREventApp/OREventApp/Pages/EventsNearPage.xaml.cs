@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data.SqlTypes;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,7 +22,12 @@ namespace OREventApp.Pages
 		    if (Connection.CheckInternetConnection())
 		        LoadEventsToListView();
 		    else
-		        Connection.ShowNotificationNoInternetConnection();
+		    {
+                ActivityList.IsVisible = false;
+                NoInternetLabel.IsVisible = true;
+                Connection.ShowNotificationNoInternetConnection();
+            }
+		        
         }
 
 	    private async void LoadEventsToListView()
@@ -29,19 +35,38 @@ namespace OREventApp.Pages
 	        EventHelper helper = new EventHelper();
 	        var events = await helper.GetEventsAsync();
 
-	        ObservableCollection<CellModel> listOfCollection = new ObservableCollection<CellModel>();
-	        ActivityList.ItemsSource = listOfCollection;
+            if (events == null)
+            {
+                ActivityList.IsVisible = false;
+                NoInternetLabel.IsVisible = true;
+            }
+            else
+            {
+                ObservableCollection<CellModel> listOfCollection = new ObservableCollection<CellModel>();
 
-	        foreach (var loadedEvent in events)
-	        {
-	            listOfCollection.Add(new CellModel()
-	            {
-	                Heading = loadedEvent.EventType + " at " + loadedEvent.Date.ToString("HH':'mm"),
-
-	            });
-	        }
+                ActivityList.IsPullToRefreshEnabled = true;
+                ActivityList.ItemSelected += (sender, e) => {
+                    ((ListView)sender).SelectedItem = null;
+                };
 
 
-	    }
+                foreach (var loadedEvent in events)
+                {
+                    listOfCollection.Add(new CellModel()
+                    {
+                        Heading = loadedEvent.EventType + " at " + loadedEvent.Date.ToString("HH':'mm"),
+                        MiniMap = "ic_launcher.png"
+
+                    });
+                }
+                ActivityList.ItemsSource = listOfCollection;
+            }
+
+	        
+
+            
+        }
     }
+
+ 
 }
