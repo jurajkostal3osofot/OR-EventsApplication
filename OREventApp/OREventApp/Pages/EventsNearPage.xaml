@@ -6,14 +6,13 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <Label x:Name="NoInternetLabel" Text="Not connected to the internet" FontSize="24" TextColor="#999" FontAttributes="Bold" IsVisible="False" HorizontalOptions="Center" VerticalOptions="Center"></Label>
                 <ListView x:Name="ActivityList" HasUnevenRows="True">
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <ViewCell>
-                                <StackLayout Orientation="Horizontal">
+                                <StackLayout>
                                     <Image HorizontalOptions="Start" Source ="{Binding MiniMap}"></Image>
-                                    <StackLayout Orientation="Vertical" HorizontalOptions="End">
+                                    <StackLayout Orientation="Vertical" HorizontalOptions="End" VerticalOptions="End">
                                         <Label HorizontalOptions="StartAndExpand" Text="{Binding Heading}" FontSize="20"></Label>
                                         <Label Text="0 attendates" HorizontalOptions="StartAndExpand" FontSize ="14"></Label>
                                         <StackLayout Orientation="Horizontal">

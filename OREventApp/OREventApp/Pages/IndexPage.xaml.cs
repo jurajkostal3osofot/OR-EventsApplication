@@ -57,21 +57,27 @@ namespace OREventApp.Pages
 	        EventHelper helper = new EventHelper();
 	        IEnumerable<EventShared> events = await helper.GetEventsAsync();
 
-	        foreach (var loadedEvent in events)
-	        {
-	            var pin = new Pin
-	            {
-	                Type = PinType.Place,
-	                Position = new Position(loadedEvent.Latitude.GetValueOrDefault(),loadedEvent.Longitude.GetValueOrDefault()),
-	                Label = ""
-	            };
-                _map.Pins.Add(pin);
-                _latitudes.Add(pin.Position.Latitude);
-                _longitudes.Add(pin.Position.Longitude);
+            if (events != null)
+            {
+                foreach (var loadedEvent in events)
+                {
+                    var pin = new Pin
+                    {
+                        Type = PinType.Place,
+                        Position = new Position(loadedEvent.Latitude.GetValueOrDefault(), loadedEvent.Longitude.GetValueOrDefault()),
+                        Label = ""
+                    };
+                    _map.Pins.Add(pin);
+                    _latitudes.Add(pin.Position.Latitude);
+                    _longitudes.Add(pin.Position.Longitude);
+                }
+                CenterMarkersOnMap();
+                Notifications.ShowNumberEvents(_map.Pins.Count);
             }
-            CenterMarkersOnMap();
-            Notifications.ShowNumberEvents(_map.Pins.Count);
-	    }
+            else
+                Connection.ShowNotificationServerNotReachable();
+
+        }
 
 
 	    private void CenterMarkersOnMap()

@@ -26,5 +26,20 @@ namespace OREventApp.Utilities
             DependencyService.Get<INotification>().Notify("No marker selected", 5000, "CLOSE", obj => { });
 
         }
+
+        public static void ShowNotificationServerNotReachable()
+        {
+
+            DependencyService.Get<INotification>().Notify("Server not reachable", 5000, "CLOSE", obj => { });
+
+        }
+
+        public static void ShowNotificationNoActivitySelected()
+        {
+
+            DependencyService.Get<INotification>().Notify("No activity selected", 5000, "CLOSE", obj => { });
+
+        }
+
     }
 }

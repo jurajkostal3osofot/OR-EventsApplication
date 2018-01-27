@@ -18,6 +18,7 @@ namespace OREventApp.Helpers
         {
             _client = new HttpClient();
             _client.MaxResponseContentBufferSize = 256000;
+            _client.Timeout = TimeSpan.FromSeconds(5);
         }
 
         public async Task<bool> SaveEventAsync(EventShared newEvent)
@@ -29,8 +30,19 @@ namespace OREventApp.Helpers
 
             HttpResponseMessage response = null;
             
-            response = await _client.PostAsync(uri, content);
-            
+            try
+            {
+                response = await _client.PostAsync(uri, content);
+            }
+            catch (HttpRequestException)
+            {
+                return false;
+            }
+            catch (TaskCanceledException)
+            {
+                return false;
+            }
+
 
             return response.IsSuccessStatusCode;
         }
@@ -41,16 +53,25 @@ namespace OREventApp.Helpers
             var uri = new Uri(Constants.EventsUrl);
             var content = "";
             IEnumerable<EventShared> events;
+
             try
             {
                 content = await _client.GetStringAsync(uri);
                 events = JsonConvert.DeserializeObject<List<EventShared>>(content);
             }
-            catch (HttpRequestException e)
+            catch (HttpRequestException)
             {
-                Console.WriteLine("" + e);
+                
+                Console.WriteLine("HttpRequestException");
                 events = null;
             }
+            catch (TaskCanceledException)
+            {
+                Console.WriteLine("TaskCanceledException");
+                events = null;
+            }
+            
+            
             return events;
         }
 

@@ -23,8 +23,6 @@ namespace OREventApp.Pages
 		        LoadEventsToListView();
 		    else
 		    {
-                ActivityList.IsVisible = false;
-                NoInternetLabel.IsVisible = true;
                 Connection.ShowNotificationNoInternetConnection();
             }
 		        
@@ -37,8 +35,7 @@ namespace OREventApp.Pages
 
             if (events == null)
             {
-                ActivityList.IsVisible = false;
-                NoInternetLabel.IsVisible = true;
+                Connection.ShowNotificationServerNotReachable();
             }
             else
             {
