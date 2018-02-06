@@ -6,13 +6,26 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Net.Http" Version="2.2.29" />
+    <PackageReference Include="Naxam.BottomTabbedPage" Version="0.1.0.1" />
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-    <PackageReference Include="Xamarin.Forms" Version="2.5.0.121934" />
-    <PackageReference Include="Xamarin.Forms.Maps" Version="2.5.0.121934" />
+    <PackageReference Include="Xam.Plugin.Geolocator" Version="4.2.0" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.3.4" />
+    <PackageReference Include="Xamarin.FFImageLoading.Transformations" Version="2.3.4" />
+    <PackageReference Include="Xamarin.Forms" Version="2.5.0.122203" />
+    <PackageReference Include="Xamarin.Forms.Maps" Version="2.5.0.122203" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\Shared\Shared.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="FFImageLoading.Forms.Droid">
+      <HintPath>C:\Users\adam.vician\.nuget\packages\xamarin.ffimageloading.forms\2.3.4\lib\MonoAndroid10\FFImageLoading.Forms.Droid.dll</HintPath>
+    </Reference>
+    <Reference Include="Naxam.BottomTabbedPage.Platform.Droid">
+      <HintPath>C:\Users\adam.vician\.nuget\packages\naxam.bottomtabbedpage\0.1.0.1\lib\MonoAndroid10\Naxam.BottomTabbedPage.Platform.Droid.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
   <ItemGroup>
@@ -28,13 +41,13 @@
     <EmbeddedResource Update="Pages\AddEventPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Pages\EventPickerPage.xaml">
-      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
-    </EmbeddedResource>
     <EmbeddedResource Update="Pages\EventsNearPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Pages\IndexPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="ViewCells\EventCell.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

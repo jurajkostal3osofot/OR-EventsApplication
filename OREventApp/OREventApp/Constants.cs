@@ -6,6 +6,8 @@ namespace OREventApp
 {
     class Constants
     {
-        public static string EventsUrl = "http://192.168.1.245:45455/api/events";
+        private static string MainUrl = "http://192.168.1.113:45455";
+        public static string EventsUrl = MainUrl+"/api/events";
+        public static string ImagesUrl = MainUrl + "/Images/";
     }
 }

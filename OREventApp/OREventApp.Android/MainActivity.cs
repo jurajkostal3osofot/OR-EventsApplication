@@ -1,6 +1,8 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using FFImageLoading.Forms.Droid;
+using Plugin.Permissions;
 
 namespace OREventApp.Droid
 {
@@ -19,7 +21,16 @@ namespace OREventApp.Droid
             global::Xamarin.Forms.Forms.Init(this, bundle);
             Xamarin.FormsMaps.Init(this, bundle);
             LoadApplication(new App());
+            CachedImageRenderer.Init(enableFastRenderer: true);
+            Plugin.CurrentActivity.CrossCurrentActivity.Current.Activity = this;
+
         }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Permission[] grantResults)
+        {
+            PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
     }
 }
 

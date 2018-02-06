@@ -1,47 +1,62 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              xmlns:renderers="clr-namespace:OREventApp.Renderers;assembly=OREventApp"
+             xmlns:sys="clr-namespace:System;assembly=netstandard"
              x:Class="OREventApp.Pages.AddEventPage"
              Title="Add Event">
     <ContentPage.Content>
-        <StackLayout>
-            <StackLayout VerticalOptions="StartAndExpand" Padding="30">
-                <renderers:CustomMap WidthRequest="320" HeightRequest="200"
-                          x:Name="MyMap"
-                          IsShowingUser="true"
-                          MapType="Hybrid"
-                />
+        <StackLayout x:Name="Container" Orientation="Vertical" >
+            <StackLayout VerticalOptions="FillAndExpand">
+                <AbsoluteLayout VerticalOptions="FillAndExpand">
+                    <renderers:CustomMap
+                        AbsoluteLayout.LayoutBounds="0,0,1,1"
+                        AbsoluteLayout.LayoutFlags="All"
+                        WidthRequest="320"
+                        PositionChanged="HandleOnPositionChanged"
+                        HeightRequest="200"
+                        x:Name="MyMap"
+                        IsShowingUser="true"
+                        MapType="Hybrid">
+
+                    </renderers:CustomMap>
+                    <Image Margin="28,0,0,38" AbsoluteLayout.LayoutBounds=".5,.5"
+                           AbsoluteLayout.LayoutFlags="PositionProportional" Source="ic_launcher.png" WidthRequest="48"
+                           HeightRequest="48">
+                    </Image>
+                </AbsoluteLayout>
             </StackLayout>
+           
 
-            <TableView Intent="Form">
-                <TableRoot>
-                    <TableSection Title="Basics">
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="13,0">
-                                <Label Text="Dátum"></Label>
-                                <DatePicker x:Name="DatePicker" HorizontalOptions="EndAndExpand"  Format="d.MM.yyyy" ></DatePicker>
-                            </StackLayout>
-                        </ViewCell>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="13,0">
-                                <Label VerticalOptions="Center" Text="Čas"></Label>
-                                <TimePicker x:Name="Picker" HorizontalOptions="EndAndExpand" ></TimePicker>
-                            </StackLayout>
-                        </ViewCell>
-                        <ViewCell>
-                            <StackLayout Orientation="Horizontal" Padding="13,0">
-                                <Label VerticalOptions="Center" Text="Aktivita"></Label>
-                                <Picker x:Name="PlacePicker" Title="Select an activity" HorizontalOptions="EndAndExpand"></Picker>
-                            </StackLayout>
-                        </ViewCell>
-                    </TableSection>
-                </TableRoot>
-            </TableView>
+            <StackLayout Padding="8" VerticalOptions="End">
+                <Label x:Name="Address" Text="Einstainova 45" FontSize="24" Margin="0,0,0,20" FontAttributes="Bold"
+                       TextColor="Black">
+                </Label>
 
-            <Button Clicked="AddNewEvent" Text="Submit"></Button>
-
+                <Picker x:Name="ActivityPicker" Title="Select an activity" Margin="0,0,0,10"></Picker>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <DatePicker Grid.Column="0" x:Name="DatePicker" Format="d.MM.yyyy"></DatePicker>
+                    <TimePicker Grid.Column="1" x:Name="TimePicker"></TimePicker>
+                </Grid>
+            </StackLayout>
+            <StackLayout VerticalOptions="End">
+                <Grid Padding="8">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Clicked="AddNewEvent" Text="Submit"></Button>
+                    <Button Grid.Column="1" Text="Cancel"></Button>
+                </Grid>
+            </StackLayout>
         </StackLayout>
+
+
     </ContentPage.Content>
 </ContentPage>

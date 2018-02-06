@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Shared.Models;
+using Xamarin.Forms.Maps;
 
 namespace OREventApp.Helpers
 {
@@ -18,7 +19,7 @@ namespace OREventApp.Helpers
         {
             _client = new HttpClient();
             _client.MaxResponseContentBufferSize = 256000;
-            _client.Timeout = TimeSpan.FromSeconds(5);
+            _client.Timeout = TimeSpan.FromSeconds(10);
         }
 
         public async Task<bool> SaveEventAsync(EventShared newEvent)
@@ -28,7 +29,7 @@ namespace OREventApp.Helpers
             var json = JsonConvert.SerializeObject(newEvent);
             var content = new StringContent(json, Encoding.UTF8, "application/json");
 
-            HttpResponseMessage response = null;
+            HttpResponseMessage response;
             
             try
             {

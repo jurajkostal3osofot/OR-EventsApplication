@@ -1,19 +1,25 @@
 ﻿using Android.Content;
 using Android.Gms.Maps;
 using Android.Gms.Maps.Model;
+using Android.Widget;
+using Java.Lang;
 using OREventApp.Droid;
 using OREventApp.Renderers;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Maps.Android;
+using Xamarin.Forms.Xaml;
 using View = Android.Views.View;
 
 [assembly: ExportRenderer(typeof(CustomMap), typeof(CustomMapRenderer))]
+
 namespace OREventApp.Droid
 {
-    public class CustomMapRenderer : MapRenderer,  GoogleMap.IOnMapClickListener
+    public class CustomMapRenderer : MapRenderer, GoogleMap.IOnCameraIdleListener
     {
         private CustomMap formsMap;
+        private double lat;
+        private double lng;
 
         public CustomMapRenderer(Context context) : base(context)
         {
@@ -22,15 +28,13 @@ namespace OREventApp.Droid
         protected override void OnElementChanged(Xamarin.Forms.Platform.Android.ElementChangedEventArgs<Map> e)
         {
             base.OnElementChanged(e);
-
             if (e.OldElement != null)
             {
-            
             }
 
             if (e.NewElement != null)
             {
-                formsMap = (CustomMap)e.NewElement;
+                formsMap = (CustomMap) e.NewElement;
                 Control.GetMapAsync(this);
             }
         }
@@ -38,8 +42,8 @@ namespace OREventApp.Droid
         protected override void OnMapReady(GoogleMap map)
         {
             base.OnMapReady(map);
-
-            NativeMap.SetOnMapClickListener(this);
+            NativeMap.SetOnCameraIdleListener(this);
+            NativeMap.MoveCamera(CameraUpdateFactory.NewLatLng(NativeMap.CameraPosition.Target));
         }
 
         protected override MarkerOptions CreateMarker(Pin pin)
@@ -52,18 +56,12 @@ namespace OREventApp.Droid
             return marker;
         }
 
-
-
-        public void OnMapClick(LatLng point)
+        public void OnCameraIdle()
         {
-            var pin = new Pin()
-            {
-                Position = new Position(point.Latitude, point.Longitude),
-                Label = ""
-            };
-            formsMap.Pins.Clear();
-            formsMap.Pins.Add(pin);   
+            System.Diagnostics.Debug.WriteLine(NativeMap.CameraPosition.Target.Latitude + " ## " +
+                                               NativeMap.CameraPosition.Target.Longitude);
+            formsMap.OnPositionChanged(new Position(NativeMap.CameraPosition.Target.Latitude,
+                NativeMap.CameraPosition.Target.Longitude));
         }
     }
-
 }

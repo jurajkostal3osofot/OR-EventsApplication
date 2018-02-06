@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ViewCell xmlns="http://xamarin.com/schemas/2014/forms"
+          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+          xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+          x:Class="OREventApp.ViewCells.EventCell">
+    <ViewCell.View>
+
+        <Grid Padding="0,10,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"></ColumnDefinition>
+                <ColumnDefinition Width="2*"></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+
+            <forms:CachedImage Grid.Column="0" x:Name="MiniMap" HorizontalOptions="Center" VerticalOptions="Center"
+                               DownsampleToViewSize="true">
+            </forms:CachedImage>
+
+            <StackLayout Grid.Column="1" x:Name="RightSideofView" Orientation="Vertical">
+                <Label x:Name="Heading" HorizontalOptions="StartAndExpand" FontSize="20"></Label>
+                <Label x:Name="NumberOfAttendates" HorizontalOptions="StartAndExpand" FontSize="14"></Label>
+                <Grid Padding="0, 20, 0, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                        <ColumnDefinition Width="*"></ColumnDefinition>
+                    </Grid.ColumnDefinitions>
+                    <Button Grid.Column="0" Text="Join"></Button>
+                    <Button Grid.Column="1" Text="Details"></Button>
+                </Grid>
+            </StackLayout>
+        </Grid>
+
+        
+    </ViewCell.View>
+</ViewCell>

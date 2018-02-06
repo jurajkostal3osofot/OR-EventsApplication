@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using FFImageLoading.Forms.Droid;
 using OREventApp.Pages;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
 
 namespace OREventApp
 {
@@ -12,29 +14,19 @@ namespace OREventApp
 		public App ()
 		{
 			InitializeComponent();
+            MainPage = new NavigationPage(new MainPage());
+		    
 
-            //MainPage = new NavigationPage(new MainPage());
-
-            var tabs = new TabbedPage()
-            {
-                Title = "sportsev"
-            };
-            tabs.Children.Add(new IndexPage());
-            tabs.Children.Add(new AddEventPage());
-            tabs.Children.Add(new EventsNearPage());
-
-            var navPage = new NavigationPage(tabs);
-            
-            navPage.Title = "sportsev";
-
-            MainPage = navPage;
 
         }
 
-		protected override void OnStart ()
+        protected override void OnStart ()
 		{
-			// Handle when your app starts
-		}
+            // Handle when your app starts
+		    
+		    
+           
+        }
 
 		protected override void OnSleep ()
 		{
