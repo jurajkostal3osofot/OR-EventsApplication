@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Web;
+using Backend.Interfaces.Repositories;
 using Microsoft.Owin.Security.OAuth;
 
 namespace Backend.Config
@@ -18,18 +19,26 @@ namespace Backend.Config
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
-            var identity = new ClaimsIdentity(context.Options.AuthenticationType);
-            if (context.UserName == "admin" && context.Password == "admin")
+            using (var scope = System.Web.Http.GlobalConfiguration.Configuration.DependencyResolver.BeginScope())
             {
-                identity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
-                identity.AddClaim(new Claim(ClaimTypes.Name, "juraj kostal"));
-                context.Validated(identity);
+                var _userService = scope.GetService(typeof(IUserRepository)) as IUserRepository;
+                var user = _userService.Get(context.UserName, new Domain.UserFetchlnclusion { });
+                var identity = new ClaimsIdentity(context.Options.AuthenticationType);
+                if (user != null && context.Password == user.Password)
+                {
+                    identity.AddClaim(new Claim(ClaimTypes.Role, "admin"));
+                    identity.AddClaim(new Claim(ClaimTypes.Email, user.Email));
+
+                    context.Validated(identity);
+                }
+                else
+                {
+                    context.SetError("invalid credentials", "provided username and password is incorrect");
+                    return;
+                }
             }
-            else
-            {
-                context.SetError("invalid credentials","provided username and password is incorrect");
-                return;
-            }
+
+            
         }
     }
 }

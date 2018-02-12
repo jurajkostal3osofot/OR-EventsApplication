@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FFImageLoading.Forms.Droid;
-using OREventApp.Pages;
+﻿
 using Xamarin.Forms;
 using Xamarin.Forms.PlatformConfiguration;
 

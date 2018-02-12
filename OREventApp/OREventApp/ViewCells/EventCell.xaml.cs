@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using FFImageLoading.Forms.Droid;
-using OREventApp.Models;
+﻿using OREventApp.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -31,7 +25,6 @@ namespace OREventApp.ViewCells
 	        MiniMap.WidthRequest = MiniMap.HeightRequest = RightSideofView.Height;
 	        MiniMap.MinimumWidthRequest = MiniMap.MinimumHeightRequest = RightSideofView.Height;
             MiniMap.Source = _context.MiniMap;
-
 	    }
 	}
 }

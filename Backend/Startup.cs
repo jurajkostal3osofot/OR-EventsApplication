@@ -15,7 +15,7 @@ namespace Backend
         public void Configuration(IAppBuilder app)
         {
             app.UseCors(Microsoft.Owin.Cors.CorsOptions.AllowAll);
-
+            
             var provider = new AuthorizationServerProvider();
 
             OAuthAuthorizationServerOptions options = new OAuthAuthorizationServerOptions
@@ -25,7 +25,6 @@ namespace Backend
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(1),
                 Provider = provider
             };
-
             app.UseOAuthAuthorizationServer(options);
             app.UseOAuthBearerAuthentication(new OAuthBearerAuthenticationOptions());
 
