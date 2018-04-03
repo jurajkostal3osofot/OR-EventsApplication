@@ -1,6 +1,8 @@
 ﻿using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Widget;
 using FFImageLoading.Forms.Droid;
 using Plugin.Permissions;
 
@@ -19,6 +21,27 @@ namespace OREventApp.Droid
             base.OnCreate(bundle);
 
             global::Xamarin.Forms.Forms.Init(this, bundle);
+            global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, bundle);
+            global::Xamarin.Auth.CustomTabsConfiguration.CustomTabsClosingMessage = null;
+
+            /*
+            global::Android.Graphics.Color color_xamarin_blue;
+            color_xamarin_blue = new global::Android.Graphics.Color(0x34, 0x98, 0xdb);
+            global::Xamarin.Auth.CustomTabsConfiguration.ToolbarColor = color_xamarin_blue;
+            */
+
+            global::Xamarin.Auth.CustomTabsConfiguration.
+                    ActivityFlags =
+                global::Android.Content.ActivityFlags.NoHistory
+                |
+                global::Android.Content.ActivityFlags.SingleTop
+                |
+                global::Android.Content.ActivityFlags.NewTask
+                ;
+
+            global::Xamarin.Auth.CustomTabsConfiguration.IsWarmUpUsed = true;
+            global::Xamarin.Auth.CustomTabsConfiguration.IsPrefetchUsed = true;
+
             Xamarin.FormsMaps.Init(this, bundle);
             LoadApplication(new App());
             CachedImageRenderer.Init(enableFastRenderer: true);
@@ -30,7 +53,6 @@ namespace OREventApp.Droid
         {
             PermissionsImplementation.Current.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
-
     }
 }
 

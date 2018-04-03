@@ -3,9 +3,9 @@ using System.Data.Entity.ModelConfiguration;
 
 namespace Backend.EntityConfigurations
 {
-    public class GroupClaimConfiguration
+    public class UserEventConfiguration
     {
-        public static void Configure(EntityTypeConfiguration<GroupClaim> entity)
+        public static void Configure(EntityTypeConfiguration<UserEvent> entity)
         {
             
         }

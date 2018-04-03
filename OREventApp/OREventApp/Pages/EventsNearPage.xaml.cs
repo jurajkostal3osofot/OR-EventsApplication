@@ -1,17 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Data.SqlTypes;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using OREventApp.Helpers;
 using OREventApp.Models;
 using OREventApp.Utilities;
 using Shared.Models;
 using Xamarin.Forms;
-using Xamarin.Forms.Internals;
 using Xamarin.Forms.Xaml;
 
 namespace OREventApp.Pages
@@ -19,20 +14,28 @@ namespace OREventApp.Pages
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EventsNearPage : ContentPage
     {
-        private IEnumerable<EventShared> events;
-        private ObservableCollection<CellModel> listOfCollection;
+        internal static IEnumerable<EventShared> _events;
+        private ObservableCollection<CellModel> _listOfCollection;
         public EventsNearPage()
         {
             InitializeComponent();
             if (Connection.CheckInternetConnection())
+            {
                 LoadEventsToListView();
+            }
+                
             else
             {
                 Connection.ShowNotificationNoInternetConnection();
             }
         }
 
-        public static string getMapUrl(double lat, double lon, int width, int height, int eventType)
+        public class EventNearPageArgs : EventArgs
+        {
+            public long Item { get; set; }
+        }
+
+        public static string GetMapUrl(double lat, double lon, int width, int height, int eventType)
         {
             string coordPair = lat + "," + lon;
             //TODO: docasne linky na dropbox kedze server nieje pripojeny k internetu. 
@@ -63,27 +66,28 @@ namespace OREventApp.Pages
         private async void LoadEventsToListView()
         {
             EventHelper helper = new EventHelper();
-            events = await helper.GetEventsAsync();
-            if (events == null)
+            _events = await helper.GetEventsAsync();
+            if (_events == null)
             {
                 Connection.ShowNotificationServerNotReachable();
             }
             else
             {
-                listOfCollection = new ObservableCollection<CellModel>();
+                _listOfCollection = new ObservableCollection<CellModel>();
                 //ActivityList.IsPullToRefreshEnabled = true;
                 ActivityList.ItemSelected += (sender, e) => { ((ListView) sender).SelectedItem = null; };
-                foreach (var loadedEvent in events)
+                foreach (var loadedEvent in _events)
                 {
-                    
-                    listOfCollection.Add(new CellModel()
+                    _listOfCollection.Add(new CellModel
                     {
+                        Id = loadedEvent.Id,
                         Heading = loadedEvent.EventType + " at " + loadedEvent.Date.ToString("HH':'mm"),
-                        MiniMap = getMapUrl((double) loadedEvent.Latitude, (double) loadedEvent.Longitude, 200, 200, (int)loadedEvent.EventType),
-                        NumberOfAttendates = "0 attendates"
+                        MiniMap = GetMapUrl((double) loadedEvent.Latitude, (double) loadedEvent.Longitude, 200, 200, (int)loadedEvent.EventType),
+                        NumberOfAttendates = loadedEvent.NumberOfLoggedInUsers,
+                        EventShared = loadedEvent
                     });
                 }
-                ActivityList.ItemsSource = listOfCollection;
+                ActivityList.ItemsSource = _listOfCollection;
                 
             }
         }

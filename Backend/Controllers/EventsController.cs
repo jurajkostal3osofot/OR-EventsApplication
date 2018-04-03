@@ -2,13 +2,9 @@
 using System.Collections.Generic;
 using System.Data.Entity.Spatial;
 using System.Linq;
-using System.Web;
 using System.Web.Http;
-using Backend.Enums;
 using Backend.Interfaces.Repositories;
 using Backend.Models;
-using Newtonsoft.Json;
-using Shared.Enums;
 using Shared.Models;
 
 namespace Backend.Controllers
@@ -16,47 +12,126 @@ namespace Backend.Controllers
     public class EventsController : ApiController
     {
         private readonly IEventRepository _eventRepository;
+
         public EventsController(IEventRepository eventRepository)
         {
             _eventRepository = eventRepository;
         }
+
         // GET api/values
-        public IEnumerable<EventShared> Get()
+        [Route("api/events/{latitude}/{longitude}")]
+        public IEnumerable<EventShared> GetEvents(string latitude,string longitude)
         {
-            var events = _eventRepository.GetNearByTenEvents().Select(f => new EventShared
+            double? latDecimal = double.TryParse(latitude.Replace(",","."), out var temp) ? temp : default(double?);
+            double? lonDecimal = double.TryParse(longitude.Replace(",", "."), out temp) ? temp : default(double?);
+            
+            PositionShared position =  new PositionShared
             {
-                Date = f.Date,
-                EventType = (EventTypeShared)f.EventType,
-                Id = f.Id,
-                Latitude = f.Location.Latitude,
-                Longitude = f.Location.Longitude
+                Latitude = latDecimal,
+                Longitude = lonDecimal
+            };
+            var events = _eventRepository.GetNearByTenEvents(position).Select(eventLoaded => new EventShared
+            {
+                Date = eventLoaded.Date,
+                EventType = eventLoaded.EventType,
+                Id = eventLoaded.Id,
+                Latitude = eventLoaded.Location.Latitude,
+                Longitude = eventLoaded.Location.Longitude,
+                Title = eventLoaded.Title,
+                Description = eventLoaded.Description,
+                UsersMax = eventLoaded.UsersMax,
+                NumberOfLoggedInUsers = eventLoaded.UserEvents.Count,
+                LoggedInUsers = eventLoaded.UserEvents.Select(x => new Shared.Models.User
+                {
+                    Id = x.UserId,
+                    Password = x.User.Password,
+                    Email = x.User.Email,
+                    GroupId = x.User.GroupId,
+                    Group = new Shared.Models.Group
+                    {
+                        Id = x.User.Group.Id,
+                        Name = x.User.Group.Name,
+                    }
+                }).ToList()
+
             });
 
             return events;
         }
 
-        public EventShared Get(int id)
+        [Route("api/event/get/{id}")]
+        public EventShared GetEvent(long id)
         {
             var eventLoaded = _eventRepository.Get(id);
-            return new EventShared
-            {   
+            var eventShared = new EventShared
+            {
                 Id = eventLoaded.Id,
+                UserId = eventLoaded.UserId,
                 Date = eventLoaded.Date,
-                EventType = (EventTypeShared)eventLoaded.EventType,
+                EventType = eventLoaded.EventType,
                 Latitude = eventLoaded.Location.Latitude,
-                Longitude = eventLoaded.Location.Longitude
+                Longitude = eventLoaded.Location.Longitude,
+                Title = eventLoaded.Title,
+                Description = eventLoaded.Description,
+                UsersMax = eventLoaded.UsersMax,
+                NumberOfLoggedInUsers = eventLoaded.UserEvents.Count,
+                LoggedInUsers = eventLoaded.UserEvents.Select(x => new Shared.Models.User
+                {
+                    Id = x.UserId,
+                    Password = x.User.Password,
+                    Email = x.User.Email,
+                    GroupId = x.User.GroupId,
+                    Group = new Shared.Models.Group
+                    {
+                        Id = x.User.Group.Id,
+                        Name = x.User.Group.Name,
+                    }
+                }).ToList()
             };
+            return eventShared;
         }
 
         // POST api/values
-        public IHttpActionResult Post([FromBody]EventShared result)
+        public IHttpActionResult Post([FromBody] EventShared result)
         {
             _eventRepository.Add(new Event
             {
-                EventType = (EventType)result.EventType,
-                Location = CreatePoint(result.Latitude.GetValueOrDefault(),result.Longitude.GetValueOrDefault()),
+                Title = result.Title,
+                Description = result.Description,
+                UserId = result.UserId,
+                UsersMax = result.UsersMax,
+                EventType = result.EventType,
+                Location = CreatePoint(result.Latitude.GetValueOrDefault(), result.Longitude.GetValueOrDefault()),
                 Date = result.Date
             });
+            return Ok();
+        }
+
+        [Route("api/event/join")]
+        [HttpPost]
+        public IHttpActionResult JoinToEvent([FromBody] EventShared result)
+        {
+            var userEvent = new UserEvent
+            {
+                UserId = result.UserId,
+                EventId = result.Id
+            };
+            _eventRepository.AddUserToEvent(userEvent);
+
+            return Ok();
+        }
+
+        [Route("api/event/leave")]
+        [HttpPost]
+        public IHttpActionResult LeaveFromEvent([FromBody] EventShared result)
+        {
+            var userEvent = new UserEvent
+            {
+                UserId = result.UserId,
+                EventId = result.Id
+            };
+            _eventRepository.DeleteUserFromEvent(userEvent);
+
             return Ok();
         }
 
@@ -66,5 +141,6 @@ namespace Backend.Controllers
             wkt = wkt.Replace(",", ".");
             return DbGeography.PointFromText(wkt, srid);
         }
+        
     }
 }

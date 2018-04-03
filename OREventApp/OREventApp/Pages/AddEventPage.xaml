@@ -31,11 +31,40 @@
            
 
             <StackLayout Padding="8" VerticalOptions="End">
-                <Label x:Name="Address" Text="Einstainova 45" FontSize="24" Margin="0,0,0,20" FontAttributes="Bold"
-                       TextColor="Black">
-                </Label>
 
-                <Picker x:Name="ActivityPicker" Title="Select an activity" Margin="0,0,0,10"></Picker>
+                <Grid VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="3*" />
+                    </Grid.ColumnDefinitions>
+                    <Label Text="Title:" FontSize="16" Grid.Row="0" Grid.Column="0" VerticalTextAlignment="Center" />
+                    <Entry x:Name="EventName" Placeholder="Title" Grid.Row="0" Grid.Column="1" />
+                    <Label Text="Description:" FontSize="16" Grid.Row="1" Grid.Column="0" VerticalTextAlignment="Center" />
+                    <Entry x:Name="EventDescription" Placeholder="Description" Grid.Row="1" Grid.Column="1" />
+                    <Label Text="Address:" FontSize="16" Grid.Row="2" Grid.Column="0" Margin="0,10,0,10" VerticalTextAlignment="Center" />
+                    <Label x:Name="Address" Grid.Row="2" Grid.Column="1" VerticalTextAlignment="Center" FontSize="17" Margin="0,10,0,10" FontAttributes="Bold" TextColor="Black"/>
+                </Grid>
+
+
+                <Grid VerticalOptions="Center">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Picker x:Name="ActivityPicker" Grid.Row="0" Grid.Column="0" Title="Select an activity" Margin="0,0,0,10"></Picker>
+                    <Label Text="Max users:" Grid.Row="0" Grid.Column="1" Margin="15,0,0,10" VerticalTextAlignment="Center" />
+                    <Entry x:Name="UserMax" Keyboard="Numeric" Grid.Row="0" Margin="0,0,0,10" Grid.Column="2" />
+                </Grid>
+                
                 <Grid>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"></ColumnDefinition>

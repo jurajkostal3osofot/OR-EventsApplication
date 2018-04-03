@@ -19,6 +19,7 @@ namespace OREventApp.Pages
     public partial class AddEventPage : ContentPage
     {
         public Plugin.Geolocator.Abstractions.Position MyPosition;
+        public Position _selectedPosition;
         private Geocoder geoCoder;
         public AddEventPage()
         {
@@ -29,7 +30,7 @@ namespace OREventApp.Pages
 
         public async void InitVarsAndPosition()
         {
-            var activityListy = Enum.GetNames(typeof(EventTypeShared)).ToList();
+            var activityListy = Enum.GetNames(typeof(EventType)).ToList();
             ActivityPicker.ItemsSource = activityListy;
             DatePicker.Date = DateTime.Now;
             TimePicker.Time = DateTime.Now.TimeOfDay;
@@ -46,14 +47,17 @@ namespace OREventApp.Pages
                 if (CheckPinExist())
                     if (CheckActivitySelected())
                     {
-                        var pin = MyMap.Pins[0];
                         var helper = new EventHelper();
                         var newEvent = new EventShared
                         {
                             Date = DatePicker.Date,
-                            Latitude = pin.Position.Latitude,
-                            Longitude = pin.Position.Longitude,
-                            EventType = (EventTypeShared) ActivityPicker.SelectedIndex
+                            Latitude = _selectedPosition.Latitude,
+                            Longitude = _selectedPosition.Longitude,
+                            EventType = (EventType) ActivityPicker.SelectedIndex,
+                            UserId = 1,
+                            Title = EventName.Text,
+                            Description = EventDescription.Text,
+                            UsersMax = 12
                         };
                         var result = await helper.SaveEventAsync(newEvent);
                         if (result)
@@ -79,8 +83,7 @@ namespace OREventApp.Pages
 
         private bool CheckPinExist()
         {
-            if (MyMap.Pins.Count > 0) return true;
-            return false;
+            return _selectedPosition != null;
         }
 
         private bool CheckActivitySelected()
@@ -97,6 +100,7 @@ namespace OREventApp.Pages
         private async void ObtainAddress(Position e)
         {
             var position = new Position(e.Latitude, e.Longitude);
+            _selectedPosition = position;
             var possibleAddresses = await geoCoder.GetAddressesForPositionAsync(position);
             //Address.Text = possibleAddresses.FirstOrDefault();
             try

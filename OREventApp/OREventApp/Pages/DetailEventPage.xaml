@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewCells="clr-namespace:OREventApp.ViewCells;assembly=OREventApp"
+             x:Class="OREventApp.Pages.DetailEventPage"
+             Title="Event detail">
+    <ContentPage.Content>
+        <StackLayout VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+            <StackLayout VerticalOptions="Start">
+                <Label x:Name="Title" HorizontalOptions="CenterAndExpand" FontSize="20" />
+                <Label x:Name="Description" HorizontalOptions="CenterAndExpand" />
+                <Label Text="Attendees" />
+                <ScrollView Margin="0,0,0,30">
+                    <StackLayout>
+                        <ListView x:Name="UsersLoggedIn" HasUnevenRows="True" CachingStrategy="RecycleElement">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <viewCells:AttendeesCell>
+                                    </viewCells:AttendeesCell>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+                    </StackLayout>
+                </ScrollView>
+            </StackLayout>
+            <StackLayout Orientation="Horizontal" VerticalOptions="End">
+                <Button x:Name="JoinButton" Clicked="JoinButtonClicked" Text="Join" HorizontalOptions="CenterAndExpand" />
+                <Button x:Name="LeaveButton" Clicked="LeaveButtonClicked" Text="Leave" HorizontalOptions="CenterAndExpand" IsVisible="False"/>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

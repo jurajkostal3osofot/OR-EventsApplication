@@ -7,11 +7,10 @@
     <ContentPage.Content>
         <ScrollView>
             <StackLayout>
-                <ListView x:Name="ActivityList" HasUnevenRows="True" CachingStrategy="RecycleElement">
+                <ListView x:Name="ActivityList" HasUnevenRows="True" CachingStrategy="RecycleElement" >
                     <ListView.ItemTemplate>
                         <DataTemplate>
                             <viewCells:EventCell>
-
                             </viewCells:EventCell>
                         </DataTemplate>
                     </ListView.ItemTemplate>

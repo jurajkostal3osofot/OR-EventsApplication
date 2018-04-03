@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using OREventApp.Domain;
@@ -9,6 +8,7 @@ using OREventApp.Renderers;
 using OREventApp.Utilities;
 using Plugin.Geolocator;
 using Shared.Models;
+using Xamarin.Auth;
 using Xamarin.Forms;
 using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
@@ -19,78 +19,95 @@ namespace OREventApp.Pages
     public partial class IndexPage : ContentPage
     {
         private IndexMap _map;
+        internal static List<EventShared> _eventShared;
+        private List<string> _markerIds;
         private readonly List<double> _latitudes;
         private readonly List<double> _longitudes;
 
         public IndexPage()
         {
-            InitializeComponent();
-            InnitMap();
-            if (Connection.CheckInternetConnection())
-            {
-                LoadPins();
-            }
-            else
-            {
-                Connection.ShowNotificationNoInternetConnection();
-            }
-
+            _eventShared = new List<EventShared>();
+            _markerIds = new List<string>();
             _latitudes = new List<double>();
             _longitudes = new List<double>();
+            InitializeComponent();
+            InnitMap();
         }
 
-        public void InnitMap()
+        public async void InnitMap()
         {
-            _map = new IndexMap(MapSpan.FromCenterAndRadius(new Position(37, -122), Distance.FromMiles(0.3)))
+            var position = await LocationHelper.GetCurrentLocation();
+            _map = new IndexMap(MapSpan.FromCenterAndRadius(new Position(position.Latitude,position.Longitude), Distance.FromKilometers(2)))
             {
                 IsShowingUser = true,
                 HeightRequest = 320,
                 WidthRequest = 200,
                 VerticalOptions = LayoutOptions.FillAndExpand
             };
+            _map.MarkerClicked += MarkerClickedEvent;
             
             var stack = new StackLayout {Spacing = 0};
             stack.Children.Add(_map);
             Content = stack;
+            LoadPins();
+        }
+
+        private async void MarkerClickedEvent(object sender, MarkerClickEventArgs e)
+        {
+            int markerIndex = _markerIds.FindIndex(x => x.StartsWith(e.Id));
+            if (markerIndex > 0 && markerIndex < _eventShared.Count)
+            {
+                EventShared clickedEvent = _eventShared[markerIndex];
+                //clickedEvent.Id = 10;
+                EventShared newEvent = await new EventHelper().GetEventAsync(clickedEvent.Id);
+                await Navigation.PushModalAsync(new DetailEventPage(newEvent));
+            }
         }
 
         private async void LoadPins()
         {
-            EventHelper helper = new EventHelper();
-            IEnumerable<EventShared> events = await helper.GetEventsAsync();
-            Plugin.Geolocator.Abstractions.Position position = await LocationHelper.GetCurrentLocation();
-            _map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude),
-                Distance.FromKilometers(2)));
-
-            if (events != null)
+            if (Connection.CheckInternetConnection())
             {
-                foreach (var loadedEvent in events)
-                {
-                    var pin = new Pin
-                    {
-                        Id = (int) loadedEvent.EventType,
-                        Type = PinType.Place,
-                        Position = new Position(loadedEvent.Latitude.GetValueOrDefault(),
-                            loadedEvent.Longitude.GetValueOrDefault()),
-                        Label = ""
-                    };
-                    _map.Pins.Add(pin);
-                    _latitudes.Add(pin.Position.Latitude);
-                    _longitudes.Add(pin.Position.Longitude);
-                }
+                EventHelper eventHelper = new EventHelper();
+                var position = await LocationHelper.GetCurrentLocation();
+                IEnumerable<EventShared> events = await eventHelper.GetEventsAsync();
+                //_map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(position.Latitude, position.Longitude), Distance.FromKilometers(2)));
 
-                if (position != null)
+                if (events != null)
                 {
-                    CenterMarkersOnMap(new Position(position.Latitude, position.Longitude));
-                    Notifications.ShowNumberEvents(_map.Pins.Count);
+                    _eventShared = events.ToList();
+                    foreach (var loadedEvent in _eventShared)
+                    {
+                        var pin = new Pin
+                        {
+                            Id = (int)loadedEvent.EventType,
+                            Type = PinType.Place,
+                            Position = new Position(loadedEvent.Latitude.GetValueOrDefault(), loadedEvent.Longitude.GetValueOrDefault()),
+                            Label = ""
+                        };
+                        _map.Pins.Add(pin);
+                        _markerIds.Add(_map.Pins[_map.Pins.Count - 1].Id.ToString());
+                        _latitudes.Add(pin.Position.Latitude);
+                        _longitudes.Add(pin.Position.Longitude);
+                    }
+
+                    if (position != null)
+                    {
+                        //CenterMarkersOnMap(new Position(position.Latitude, position.Longitude));
+                        Notifications.ShowNumberEvents(_map.Pins.Count);
+                    }
+
+                    else
+                        await DisplayAlert("No GPS", "We could not obtain your location.", "RIP");
+
                 }
-                    
                 else
-                    await DisplayAlert("No GPS", "We could not obtain your location.", "RIP");
-                
+                    Connection.ShowNotificationServerNotReachable();
             }
             else
-                Connection.ShowNotificationServerNotReachable();
+            {
+                Connection.ShowNotificationNoInternetConnection();
+            }
         }
 
         private void CenterMarkersOnMap(Position pos)

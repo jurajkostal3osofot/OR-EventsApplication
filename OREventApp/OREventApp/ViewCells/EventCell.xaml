@@ -24,8 +24,9 @@
                         <ColumnDefinition Width="*"></ColumnDefinition>
                         <ColumnDefinition Width="*"></ColumnDefinition>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" Text="Join"></Button>
-                    <Button Grid.Column="1" Text="Details"></Button>
+                    <Button x:Name="JoinButton" Grid.Column="0" Text="Join" Clicked="JoinButtonClicked"></Button>
+                    <Button x:Name="LeaveButton" Grid.Column="0" Text="Leave" Clicked="LeaveButtonClicked" IsVisible="False"></Button>
+                    <Button Grid.Column="1" Text="Detail" Clicked="DetailButtonClicked"></Button>
                 </Grid>
             </StackLayout>
         </Grid>

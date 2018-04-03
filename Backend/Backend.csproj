@@ -259,8 +259,8 @@
     <Compile Include="Controllers\ValuesController.cs" />
     <Compile Include="DatabaseContext.cs" />
     <Compile Include="Domain\UserFetchlnclusion.cs" />
+    <Compile Include="EntityConfigurations\UserEventConfiguration.cs" />
     <Compile Include="EntityConfigurations\GroupClaimConfiguration.cs" />
-    <Compile Include="Enums\EventType.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -282,12 +282,21 @@
     <Compile Include="Migrations\201802081833352_UserPassword.Designer.cs">
       <DependentUpon>201802081833352_UserPassword.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201803220815586_AddUserIdAndNewColumnsToEvent.cs" />
+    <Compile Include="Migrations\201803220815586_AddUserIdAndNewColumnsToEvent.Designer.cs">
+      <DependentUpon>201803220815586_AddUserIdAndNewColumnsToEvent.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201803231206277_AddTableUserEvent.cs" />
+    <Compile Include="Migrations\201803231206277_AddTableUserEvent.Designer.cs">
+      <DependentUpon>201803231206277_AddTableUserEvent.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Claim.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Event.cs" />
     <Compile Include="Models\GroupClaim.cs" />
+    <Compile Include="Models\UserEvent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\EventRepository.cs" />
     <Compile Include="Repositories\GroupRepository.cs" />
@@ -365,6 +374,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Config\" />
+    <Folder Include="Enums\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -383,6 +394,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201802081833352_UserPassword.resx">
       <DependentUpon>201802081833352_UserPassword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803220815586_AddUserIdAndNewColumnsToEvent.resx">
+      <DependentUpon>201803220815586_AddUserIdAndNewColumnsToEvent.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201803231206277_AddTableUserEvent.resx">
+      <DependentUpon>201803231206277_AddTableUserEvent.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

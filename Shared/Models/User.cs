@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+using System.Text;
 
-namespace Backend.Models
+namespace Shared.Models
 {
     public class User
     {
@@ -10,9 +10,7 @@ namespace Backend.Models
         public string Email { get; set; }
         public long GroupId { get; set; }
         public Group Group { get; set; }
-        [Required]
         public String Password { get; set; }
-        public ICollection<Event> Events { get; set; }
-        public ICollection<UserEvent> UserEvents { get; set; }
+        public IEnumerable<EventShared> Events { get; set; }
     }
 }

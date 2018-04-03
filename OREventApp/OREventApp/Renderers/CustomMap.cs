@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using OREventApp.Pages;
+using Shared.Models;
 using Xamarin.Forms.Maps;
 
 namespace OREventApp.Renderers
 {
     public class CustomMap : Map
     {
-
         
         public CustomMap()
         {
@@ -19,13 +17,10 @@ namespace OREventApp.Renderers
         }
 
         public Position ObtainCenterMapPosition { get; set; }
-
         public event EventHandler<PositionEventArgs> PositionChanged;
-
 
         public virtual void OnPositionChanged(Position position)
         {
-           
             PositionChanged?.Invoke(this, new PositionEventArgs{ Position = position});
         }
     }
